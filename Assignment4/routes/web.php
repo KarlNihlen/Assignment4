@@ -19,6 +19,24 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/search', function () {
+    return view('search');
+});
+
+Route::get('/pricerange', function () {
+    $products = Product::all();
+    $min = $_GET["MinValue"];
+    $max = $_GET["MaxValue"];
+    return view('pricerange', [
+      'products' => $products,
+      'min' => $min,
+      'max' => $max,
+
+    ]);
+});
+
+
+
 
 Auth::routes();
 

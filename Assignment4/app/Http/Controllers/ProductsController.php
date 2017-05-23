@@ -26,6 +26,19 @@ class ProductsController extends Controller
       ]);
     }
 
+    /*public function searchvalue(Request $request)
+    {
+      $max = $request->get("MaxValue");
+      $min = $request->get("MinValue");
+      $products = Product::all();
+
+      return view("pricerange", [
+        "max" => $max,
+        "min" => $min,
+        "products" => $products,
+      ]);
+    }
+    */
     /**
      * Show the form for creating a new resource.
      *
@@ -50,6 +63,7 @@ class ProductsController extends Controller
       $product->image = $request->get("image");
       $product->description = $request->get("description");
       $product->price = $request->get("price");
+
       $product->save();
       return redirect()->action('ProductsController@index')->with('status', 'Produkten är sparad!');
     }
