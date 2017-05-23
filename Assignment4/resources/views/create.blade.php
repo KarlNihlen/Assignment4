@@ -25,7 +25,7 @@
     <label for="image">Link to image</label>
     <input type="text" class="form-control" id="image" name="image" placeholder="länka bild här...">
   </div>
-  <input type="submit" value="Spara produkt" class="btn btn-success">
+  <input type="submit" value="Save produkt" class="btn btn-success">
 </form>
 
 @endsection
