@@ -65,8 +65,12 @@ class ProductsController extends Controller
       $product = Product::find($id);
       $product->reviews = $product->reviews;
       $product->stores = $product->stores;
+      $products = Product::all();
+      $length = count($products) -1;
       return view("show", [
-        "product" => $product
+        "product" => $product,
+        "products" => $products,
+        "length" => $length
       ]);
 
       //return response()->json($product);

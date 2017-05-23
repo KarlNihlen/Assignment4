@@ -12,6 +12,8 @@
   {{ $product->description }}
 </p>
 
+
+
 <p>
   Finns i dom här butikerna: <br />
   @foreach($product->stores as $store)
@@ -29,6 +31,16 @@
     <br />
   @endforeach
 </p>
+<h3 style="clear:both;">
+@if($product->id != 1)
+<a style="float:left" href="{{ $product->id -1 }}"> Previous Phone</a>
+
+@endif
+@if($product->id < $length)
+<a style="float:right" href="{{ $product->id +1 }} "> Next Phone</a>
+
+</h3>
+@endif
 
 
 @endsection
