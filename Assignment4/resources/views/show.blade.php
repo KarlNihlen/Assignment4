@@ -36,7 +36,7 @@
 <a style="float:left" href="{{ $product->id -1 }}"> Previous Phone</a>
 
 @endif
-@if($product->id < $length)
+@if($product->id <= $length)
 <a style="float:right" href="{{ $product->id +1 }} "> Next Phone</a>
 
 </h3>
