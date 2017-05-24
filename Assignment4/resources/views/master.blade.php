@@ -46,6 +46,9 @@
         <li>
           <a href="/products">Alla produkter</a>
         </li>
+        <li>
+          <a href="/search">Sök</a>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

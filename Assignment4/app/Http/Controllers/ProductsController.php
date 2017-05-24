@@ -26,11 +26,6 @@ class ProductsController extends Controller
       ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view("create");
@@ -50,6 +45,7 @@ class ProductsController extends Controller
       $product->image = $request->get("image");
       $product->description = $request->get("description");
       $product->price = $request->get("price");
+
       $product->save();
       return redirect()->action('ProductsController@index')->with('status', 'Produkten är sparad!');
     }
@@ -65,8 +61,12 @@ class ProductsController extends Controller
       $product = Product::find($id);
       $product->reviews = $product->reviews;
       $product->stores = $product->stores;
+      $products = Product::all();
+      $length = count($products) -1;
       return view("show", [
-        "product" => $product
+        "product" => $product,
+        "products" => $products,
+        "length" => $length
       ]);
 
       //return response()->json($product);
