@@ -22,19 +22,4 @@ final class ProductTest extends TestCase
       $response = $this->withSession(['foo' => 'bar'])
                                     ->get('/');
     }
-
-    public function testApplicationUser()
-    {
-      $user = factory(User::class)->create();
-      $response = $this->actingAs($user)
-                       ->withSession(['foo' => 'bar'])
-                       ->get('/');
-    }
-
-
-
-  
-
-
-
 }

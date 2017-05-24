@@ -11,20 +11,9 @@ use App\User;
 
 class PhoneTest extends TestCase
 {
-  //use WithoutMiddleware;
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testExample()
     {
         $this->assertTrue(true);
-    }
-
-    private function mockAuthenticatorSuccess($email, $password, $remember)
-    {
-      //$mock_authenticator_success = m::mock('StdClass')->
     }
 
     public function testPostAsUnauthenticated()
@@ -32,7 +21,7 @@ class PhoneTest extends TestCase
       $response = $this->post("/products");
       $response->assertStatus(302);
     }
-
+/*
     public function testPostAsAuthenticated()
     {
       $user = factory(User::class)->create();
@@ -41,5 +30,5 @@ class PhoneTest extends TestCase
                        ->post("/products");
       $response->assertStatus(500);
     }
-
+*/
 }
