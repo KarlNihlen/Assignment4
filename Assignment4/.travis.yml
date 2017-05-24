@@ -1,0 +1,24 @@
+os:
+- linux
+addons:
+  ssh_known_hosts:
+  - enkelt.westeurope.cloudapp.azure.com
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+language: php
+php:
+-7.0
+install:
+- composer install
+script: vendor/bin/phpunit --configuration phpunit.xml --coverage-text
+deploy:
+- provider: script
+  skip-cleanup: true
+  script:
+  - rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR $DEPLOY_USER@$DEPLOY_HOST:/home/Karl
+  on:
+    branch: master
+notifications:
+  email:
+    recipients: karl.nihlen@gmail.com
