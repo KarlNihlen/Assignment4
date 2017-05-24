@@ -26,24 +26,6 @@ class ProductsController extends Controller
       ]);
     }
 
-    /*public function searchvalue(Request $request)
-    {
-      $max = $request->get("MaxValue");
-      $min = $request->get("MinValue");
-      $products = Product::all();
-
-      return view("pricerange", [
-        "max" => $max,
-        "min" => $min,
-        "products" => $products,
-      ]);
-    }
-    */
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view("create");
