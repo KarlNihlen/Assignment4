@@ -21,7 +21,7 @@
       <form action="products/{{ $product->id }}/edit" method="get" style="float:right">
         {{ csrf_field() }}
         @if(Auth::check())
-          <input type="submit" value="Edit product" class="btn btn-success" style="float:right">
+          <input type="submit" value="Edit Product" class="btn btn-success" style="float:right">
         @endif
     </form>
   </li>
