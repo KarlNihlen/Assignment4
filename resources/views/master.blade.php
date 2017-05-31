@@ -3,6 +3,9 @@
   <head>
       <meta charset="utf-8">
       <title>Produkter</title>
+
+      <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+      <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -35,17 +38,34 @@
         <li>
           <a href="/stores/create">Lägg till store</a>
         </li>
-        <li>
-          @if (Route::has('login'))
-                  @if (Auth::check())
-                      <a href="{{ url('/home') }}">Min Profil</a>
+        @if (Route::has('login'))
+                @if (Auth::check())
+                  <li> <a href="{{ url('/home') }}">My account</a> </li>
+                  <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
 
-                  @else
-                      <a href="{{ url('/login') }}">Login</a>
-                      <a href="{{ url('/register') }}">Register</a>
-                  @endif
-          @endif
-        </li>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li> <a href="{{ url('/login') }}">Login</a>  </li>
+                      <li> <a href="{{ url('/register') }}">Register</a> </li>
+                @endif
+        @endif
+
         <li>
           <a href="/products">Alla produkter</a>
         </li>
