@@ -7,6 +7,8 @@
 <p>
   Pris: {{ $product->price }} kr
 </p>
+<a href="/reviews/create?product_id={{ $product->id }}" class="btn btn-danger" style="float:right">Add new review</a>
+
 <img src="{{ $product->image }}" alt="{{ $product->title }}">
 <p>
   {{ $product->description }}
@@ -31,6 +33,7 @@
     <br />
   @endforeach
 </p>
+
 <h3 style="clear:both;">
 @if($product->id != 1)
 <a style="float:left" href="{{ $product->id -1 }}"> Previous Phone</a>

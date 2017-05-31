@@ -8,6 +8,11 @@ use App\Review;
 
 class ReviewsController extends Controller
 {
+
+  public function __construct()
+  {
+    $this->middleware('auth', ['except' =>['index', 'show']]);
+  }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +20,13 @@ class ReviewsController extends Controller
      */
     public function index()
     {
-      //$reviews = Review::all();
-      //json_decode($reviews);
-      //return response()->json($reviews);
+      $reviews = Review::all();
+      $products = Product::all();
+
+      return view("indexreview", [
+        "reviews" => $reviews,
+        "products" => $products,
+      ]);
     }
 
     /**
@@ -25,9 +34,15 @@ class ReviewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $reviews = Review::all();
+        $product_id = $request->get("product_id");
+
+        return view("createreview", [
+          "reviews" => $reviews,
+          "product_id" => $product_id,
+        ]);
     }
 
     /**
@@ -38,6 +53,14 @@ class ReviewsController extends Controller
      */
     public function store(Request $request)
     {
+      $review = new Review;
+      $review->name = $request->get("name");
+      $review->grade = $request->get("grade");
+      $review->comment = $request->get("comment");
+      $review->product_id = $request->get("product_id");
+      $review->save();
+
+      return redirect()->action('ReviewsController@index')->with('status', 'Reviewen är sparad!');
 
     }
 
@@ -49,10 +72,14 @@ class ReviewsController extends Controller
      */
     public function show($id)
     {
-    //  $review = Review::find($id);
-      //$review->product = $review->product;
-      //json_decode($review);
-      //return response()->json($review);
+      $review = Review::find($id);
+      $product = Product::find($review->product_id);
+      $product_title = $product->title;
+
+      return view("showreview", [
+        "review" => $review,
+        "product_title" => $product_title,
+      ]);
     }
 
     /**
@@ -63,7 +90,10 @@ class ReviewsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $review = Review::find($id);
+      return view("editreview", [
+        "review" => $review
+      ]);
     }
 
     /**
@@ -75,7 +105,14 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $review = Review::find($id);
+      $review->name = $request->get("name");
+      $review->grade = $request->get("grade");
+      $review->comment = $request->get("comment");
+
+      $review->save();
+
+      return redirect()->action('ReviewsController@index')->with('status', 'Reviewen är sparad!');
     }
 
     /**
@@ -86,6 +123,7 @@ class ReviewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Review::destroy($id);
+      return redirect()->action('ReviewsController@index')->with('status', 'Reviewen är raderad!');
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Store;
 use App\Product;
 
 class ProductsController extends Controller
@@ -28,7 +30,10 @@ class ProductsController extends Controller
 
     public function create()
     {
-        return view("create");
+      $stores = Store::all();
+      return view("create", [
+        "stores" => $stores,
+      ]);
     }
 
     /**
@@ -45,8 +50,17 @@ class ProductsController extends Controller
       $product->image = $request->get("image");
       $product->description = $request->get("description");
       $product->price = $request->get("price");
-
       $product->save();
+
+      $product_id = DB::connection()->getPdo()->lastInsertId();
+
+      foreach ($request->get("stores") as $store) {
+        DB::table('product_store')->insert([
+          "product_id" => $product_id,
+          "store_id" => $store,
+
+        ]);
+      }
       return redirect()->action('ProductsController@index')->with('status', 'Produkten är sparad!');
     }
 
@@ -80,10 +94,12 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        return view("edit", [
-          "product" => $product
-        ]);
+      $stores = Store::all();
+      $product = Product::find($id);
+      return view("edit", [
+        "product" => $product,
+        "stores" => $stores,
+      ]);
     }
 
     /**
@@ -103,6 +119,18 @@ class ProductsController extends Controller
         $product->price = $request->get("price");
         $product->save();
 
+        $product_id = $product->id;
+        foreach ($request->get("stores") as $store) {
+          DB::table('product_store')->truncate();
+
+
+        }
+        foreach ($request->get("stores") as $store) {
+        DB::table('product_store')->insert([
+          "product_id" => $product_id,
+          "store_id" => $store,
+        ]);
+      }
         return redirect()->action('ProductsController@index')->with('status', 'Produkten är sparad!');
     }
     /**
